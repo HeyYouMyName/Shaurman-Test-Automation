@@ -3,7 +3,7 @@ import decorator
 
 class testrail:
     """
-    Decorator to decorate tests for easier identification and printing out their IDs
+    Decorator to decorate tests for easier identification and printing out their IDs.
     """
     def __init__(self, test_case_id, output=True):
         self.test_case_id = test_case_id
