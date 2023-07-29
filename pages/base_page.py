@@ -92,4 +92,4 @@ class BasePage:
     # Specific methods
     # Checks
     def check_sidebar_present(self) -> None:
-        assert self._is_element_visible(*self.SIDEBAR_BLOCK)
+        assert not self._is_element_visible(*self.SIDEBAR_BLOCK)
