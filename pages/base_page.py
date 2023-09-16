@@ -10,6 +10,10 @@ class BasePage:
 
     # Locators
     SIDEBAR_BLOCK = (By.CSS_SELECTOR, "div.sidebar")
+    TOPBAR_BLOCK = (By.CSS_SELECTOR, "div.top-menu")
+
+    FOOTER_CONTAINER = (By.CSS_SELECTOR, "div.footer__container")
+    MAIN_CONTENT_BLOCK = (By.CSS_SELECTOR, "#content.main")
 
     def __init__(
         self,
@@ -93,3 +97,10 @@ class BasePage:
     # Checks
     def check_sidebar_present(self) -> None:
         assert self._is_element_visible(*self.SIDEBAR_BLOCK)
+    def check_tob_bar_present(self) -> None:
+        assert self._is_element_visible(*self.TOPBAR_BLOCK)
+    def check_footer_container_present(self) -> None:
+        assert self._is_element_visible(*self.FOOTER_CONTAINER)
+
+    def check_main_content_block_present(self) -> None:
+        assert self._is_element_visible(*self.MAIN_CONTENT_BLOCK)
