@@ -65,7 +65,7 @@ class BasePage:
         """
         Check if specified element is visible on the page
         """
-        return not self._is_not_element_present(locator, selector, timeout)
+        return not self._is_not_element_visible(locator, selector, timeout)
 
     def _is_not_element_visible(
         self,
