@@ -7,8 +7,8 @@ from pages.home_page import HomePage
 class TestProductListPage:
     @testrail("PLP_001")
     def test_navigating_product_list_page(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()

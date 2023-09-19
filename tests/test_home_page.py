@@ -8,8 +8,8 @@ from pages.home_page import HomePage
 class TestHomePage:
     @testrail("HP_001")
     def test_displaying_sidebar(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()
@@ -17,8 +17,8 @@ class TestHomePage:
 
     @testrail("HP_002")
     def test_displaying_topbar(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()
@@ -26,8 +26,8 @@ class TestHomePage:
 
     @testrail("HP_003")
     def test_slider_present(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()
@@ -35,8 +35,8 @@ class TestHomePage:
 
     @testrail("HP_003")
     def test_slider_present(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()
@@ -44,8 +44,8 @@ class TestHomePage:
 
     @testrail("HP_004")
     def test_main_content_present(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()
@@ -53,8 +53,8 @@ class TestHomePage:
 
     @testrail("HP_005")
     def test_footer_present(
-            self,
-            browser
+        self,
+        browser
     ):
         home_page = HomePage(browser)
         home_page.open()

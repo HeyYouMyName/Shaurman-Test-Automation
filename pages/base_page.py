@@ -19,8 +19,8 @@ class BasePage:
     SIDEBAR_ITEMS = (By.CSS_SELECTOR, f"div.sidebar > ul:nth-child(2) > li:nth-child({random.randint(1, 17)})")
 
     def __init__(
-            self,
-            browser: webdriver
+        self,
+        browser: webdriver
     ):
         self.browser = browser
 
@@ -32,10 +32,10 @@ class BasePage:
 
     # General methods
     def _is_element_present(
-            self,
-            locator: str,
-            selector: str,
-            timeout: int = 4
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
     ) -> bool:
         """
         Check if specified element is present on the page
@@ -43,10 +43,10 @@ class BasePage:
         return not self._is_not_element_present(locator, selector, timeout)
 
     def _is_not_element_present(
-            self,
-            locator: str,
-            selector: str,
-            timeout: int = 4
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
     ) -> bool:
         try:
             WebDriverWait(self.browser, timeout).until(
@@ -57,10 +57,10 @@ class BasePage:
         return False
 
     def _is_element_visible(
-            self,
-            locator: str,
-            selector: str,
-            timeout: int = 4
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
     ) -> bool:
         """
         Check if specified element is visible on the page
@@ -68,10 +68,10 @@ class BasePage:
         return not self._is_not_element_present(locator, selector, timeout)
 
     def _is_not_element_visible(
-            self,
-            locator: str,
-            selector: str,
-            timeout: int = 4
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
     ) -> bool:
         try:
             WebDriverWait(self.browser, timeout).until(
@@ -82,8 +82,8 @@ class BasePage:
         return False
 
     def _check_url_contains(
-            self,
-            url_fragment: str
+        self,
+        url_fragment: str
     ) -> bool:
         """
         Check if provided url_fragment is present in the actual.
