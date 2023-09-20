@@ -12,5 +12,5 @@ class TestProductListPage:
     ):
         home_page = HomePage(browser)
         home_page.open()
-        home_page.click_on_sidebar_random_item()
+        home_page.click_on_sidebar_category(2)
         time.sleep(1)

@@ -16,7 +16,8 @@ class BasePage:
 
     FOOTER_CONTAINER = (By.CSS_SELECTOR, "div.footer__container")
     MAIN_CONTENT_BLOCK = (By.CSS_SELECTOR, "#content.main")
-    SIDEBAR_ITEMS = (By.CSS_SELECTOR, f"div.sidebar > ul:nth-child(2) > li:nth-child({random.randint(1, 17)})")
+
+    SIDEBAR_ITEMS = (By.CSS_SELECTOR, f"div.sidebar > ul:nth-child(2) > li")
 
     def __init__(
         self,
@@ -110,6 +111,6 @@ class BasePage:
     def check_main_content_block_present(self) -> None:
         assert self._is_element_visible(*self.MAIN_CONTENT_BLOCK)
 
-    def click_on_sidebar_random_item(self):
-        side_bar_menu = self.browser.find_element(*self.SIDEBAR_ITEMS)
-        side_bar_menu.click()
+    def click_on_sidebar_category(self, arg):
+        side_bar_menu = self.browser.find_elements(*self.SIDEBAR_ITEMS)
+        side_bar_menu[arg].click()
