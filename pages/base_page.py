@@ -67,7 +67,16 @@ class BasePage:
         Check if specified element is visible on the page
         """
         return not self._is_not_element_visible(locator, selector, timeout)
-
+    def _is_elements_visible(
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
+    ) -> bool:
+        """
+        Check if specified element is visible on the page
+        """
+        return not self._is_not_elements_visible(locator, selector, timeout)
     def _is_not_element_visible(
         self,
         locator: str,
@@ -77,6 +86,19 @@ class BasePage:
         try:
             WebDriverWait(self.browser, timeout).until(
                 EC.visibility_of_element_located((locator, selector))
+            )
+        except TimeoutException:
+            return True
+        return False
+    def _is_not_elements_visible(
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
+    ) -> bool:
+        try:
+            WebDriverWait(self.browser, timeout).until(
+                EC.visibility_of_all_elements_located((locator, selector))
             )
         except TimeoutException:
             return True
