@@ -11,8 +11,6 @@ class ProductListPage(BasePage):
     PRODUCT_WEIGHT = (By.CSS_SELECTOR, ".products__item-head .products__item-weight")
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".products__item-head .products__item-price")
     PRODUCT_INGREDIENTS = (By.CSS_SELECTOR, ".products__item-head .products__item-description")
-    PRICE_ON_PRODUCT_PAGE = (By.CSS_SELECTOR, "div.single-product__content > div.single-product__order > p > span")
-
     PRODUCT_IMG = (By.CSS_SELECTOR, ".products__item-thumb")
 
     def check_change_button_present(self) -> None:
@@ -35,12 +33,10 @@ class ProductListPage(BasePage):
         side_bar_menu = self.browser.find_elements(*self.ORDER_BUTTON)
         side_bar_menu[arg].click()
 
-    def check_price_equal(self, arg):
-        product_img = self.browser.find_elements(*self.PRODUCT_IMG)
-        price = self.browser.find_elements(*self.PRODUCT_PRICE)
-        price_text = price[arg].text
-        product_img[arg].click()
-        price_product = self.browser.find_element(*self.PRICE_ON_PRODUCT_PAGE)
-        price_product_text = price_product.text
+    def get_hold_of_price(self, arg):
+        price = self.browser.find_elements(*self.PRODUCT_PRICE)[arg].text
+        return price
 
-        assert price_text == price_product_text, "they are not equal"
+    def click_image_way_to_product_page(self, arg):
+        self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
+

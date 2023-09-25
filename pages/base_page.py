@@ -1,10 +1,12 @@
-import random
-
 from selenium.common import TimeoutException
 from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+
+def check_prices_are_equal(val1, val2):
+    assert val1 == val2, "they are not equal"
 
 
 class BasePage:
@@ -67,16 +69,15 @@ class BasePage:
         Check if specified element is visible on the page
         """
         return not self._is_not_element_visible(locator, selector, timeout)
+
     def _is_elements_visible(
         self,
         locator: str,
         selector: str,
         timeout: int = 4
     ) -> bool:
-        """
-        Check if specified element is visible on the page
-        """
         return not self._is_not_elements_visible(locator, selector, timeout)
+
     def _is_not_element_visible(
         self,
         locator: str,
@@ -90,6 +91,7 @@ class BasePage:
         except TimeoutException:
             return True
         return False
+
     def _is_not_elements_visible(
         self,
         locator: str,

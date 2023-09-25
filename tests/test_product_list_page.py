@@ -1,8 +1,8 @@
-import time
-
 from libraries.testrail import testrail
+from pages.base_page import check_prices_are_equal
 from pages.home_page import HomePage
 from pages.product_list_page import ProductListPage
+from pages.product_page import ProductPage
 
 
 class TestProductListPage:
@@ -14,7 +14,6 @@ class TestProductListPage:
         home_page = HomePage(browser)
         home_page.open()
         home_page.click_on_sidebar_category(2)
-        time.sleep(1)
 
     @testrail("PLP_002")
     def test_change_order_buttons_check(
@@ -28,8 +27,6 @@ class TestProductListPage:
         product_list_page.check_change_button_present()
         product_list_page.check_order_button_present()
 
-        time.sleep(1)
-
     @testrail("PLP_003")
     def test_title_weight_price_ingredients_check(
         self,
@@ -40,8 +37,6 @@ class TestProductListPage:
         home_page.click_on_sidebar_category(9)
         product_list_page = ProductListPage(browser)
         product_list_page.check_product_title_weight_price_ingredients_present()
-
-        time.sleep(1)
 
     @testrail("PLP_004")
     def test_change_button_click(
@@ -54,8 +49,6 @@ class TestProductListPage:
         product_list_page = ProductListPage(browser)
         product_list_page.click_on_change_button(3)
 
-        time.sleep(2)
-
     @testrail("PLP_005")
     def test_order_button_not_required(
         self,
@@ -66,8 +59,6 @@ class TestProductListPage:
         home_page.click_on_sidebar_category(9)
         product_list_page = ProductListPage(browser)
         product_list_page.click_on_order_button(1)
-
-        time.sleep(2)
 
     @testrail("PLP_006")
     def test_order_button_required(
@@ -80,16 +71,18 @@ class TestProductListPage:
         product_list_page = ProductListPage(browser)
         product_list_page.click_on_order_button(3)
 
-        time.sleep(2)
-
     @testrail("PLP_007")
     def test_match_prices(
         self,
-        browser
+        browser,
+        arg=1
     ):
         home_page = HomePage(browser)
         home_page.open()
-        home_page.click_on_sidebar_category(9)
+        home_page.click_on_sidebar_category(1)
         product_list_page = ProductListPage(browser)
-        product_list_page.check_price_equal(1)
-        time.sleep(2)
+        val1 = product_list_page.get_hold_of_price(arg)
+        product_list_page.click_image_way_to_product_page(arg)
+        product_page = ProductPage(browser)
+        val2 = product_page.check_price_equal_product()
+        check_prices_are_equal(val1, val2)
