@@ -5,19 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-
-
-
 class BasePage:
     URL = r"https://shaurman.com.ua/"
 
     # Locators
     SIDEBAR_BLOCK = (By.CSS_SELECTOR, "div.sidebar")
     TOP_BAR_BLOCK = (By.CSS_SELECTOR, "div.top-menu")
-
     FOOTER_CONTAINER = (By.CSS_SELECTOR, "div.footer__container")
     MAIN_CONTENT_BLOCK = (By.CSS_SELECTOR, "#content.main")
-
     SIDEBAR_ITEMS = (By.CSS_SELECTOR, f"div.sidebar > ul:nth-child(2) > li")
 
     def __init__(
