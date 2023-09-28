@@ -1,5 +1,5 @@
 from libraries.testrail import testrail
-from pages.base_page import check_prices_are_equal
+
 from pages.home_page import HomePage
 from pages.product_list_page import ProductListPage
 from pages.product_page import ProductPage
@@ -75,14 +75,14 @@ class TestProductListPage:
     def test_match_prices(
         self,
         browser,
-        arg=1
+        product_index=1
     ):
         home_page = HomePage(browser)
         home_page.open()
         home_page.click_on_sidebar_category(1)
         product_list_page = ProductListPage(browser)
-        val1 = product_list_page.get_hold_of_price(arg)
-        product_list_page.click_image_way_to_product_page(arg)
+        val1 = product_list_page.get_hold_of_price(product_index)
+        product_list_page.click_image_way_to_product_page(product_index)
         product_page = ProductPage(browser)
-        val2 = product_page.check_price_equal_product()
-        check_prices_are_equal(val1, val2)
+        val2 = product_page.get_price_on_product()
+        product_list_page.check_prices_are_equal(val1, val2)
