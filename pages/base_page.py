@@ -5,8 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-def check_prices_are_equal(val1, val2):
-    assert val1 == val2, "they are not equal"
+
 
 
 class BasePage:
@@ -138,3 +137,7 @@ class BasePage:
     def click_on_sidebar_category(self, arg):
         side_bar_menu = self.browser.find_elements(*self.SIDEBAR_ITEMS)
         side_bar_menu[arg].click()
+
+    @staticmethod
+    def check_prices_are_equal(val1, val2):
+        assert val1 == val2, "they are not equal"
