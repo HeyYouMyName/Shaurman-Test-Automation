@@ -1,4 +1,3 @@
-import time
 
 from libraries.testrail import testrail
 from pages.home_page import HomePage
@@ -17,7 +16,7 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(2)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
 
     @testrail("PP_002")
     def test_add_shopping_cart_required_blank(
@@ -29,11 +28,10 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(4)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
         product_page.click_basket_button()
-        product_page.cake_nessesary_is_displayed()
-        time.sleep(3)
+        product_page.check_cake_nessesary_text_is_displayed()
 
     @testrail("PP_003")
     def test_add_shopping_cart_required_filled(
@@ -45,13 +43,12 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(5)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
-        product_page.scroll_to_button()
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
         product_page.click_basket_button2()
-        product_page.num_basket_equal_one()
+        product_page.check_number_items_in_the_basket(1)
 
     @testrail("PP_004")
     def test_add_additional_ingredient(
@@ -63,12 +60,12 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(5)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
-        product_page.scroll_to_button()
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
         product_page.add_additional_ingredient(7)
+
 
     @testrail("PP_005")
     def test_remove_additional_ingredient(
@@ -80,12 +77,12 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(5)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
-        product_page.scroll_to_button()
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
-        product_page.add_and_delete_additional_ingredient(7)
+        product_page.add_additional_ingredient(7)
+        product_page.delete_additional_ingredient(7)
 
     @testrail("PP_006")
     def test_zoomed_image(
@@ -97,7 +94,7 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(2)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
         product_page.click_product_image()
 
@@ -111,7 +108,7 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(2)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
         product_page.click_product_image()
         product_page.close_product_image()
@@ -126,6 +123,6 @@ class TestProductListPage:
         home_page.open()
         home_page.click_on_sidebar_category(2)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
         product_page.check_product_name()

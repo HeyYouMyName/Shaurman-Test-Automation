@@ -37,6 +37,6 @@ class ProductListPage(BasePage):
         price = self.browser.find_elements(*self.PRODUCT_PRICE)[arg].text
         return price
 
-    def click_image_way_to_product_page(self, arg):
+    def click_on_image_and_go_to_product_page(self, arg):
         self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
 
