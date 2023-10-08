@@ -84,7 +84,6 @@ class TestProductListPage:
         price_before = product_page.add_additional_ingredient(7)
         product_page.delete_additional_ingredient(7, price_before)
 
-
     @testrail("PP_006")
     def test_zoomed_image(
         self,

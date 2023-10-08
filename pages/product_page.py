@@ -61,8 +61,6 @@ class ProductPage(BasePage):
         price_after = int(self.browser.find_element(*self.PRICE_LOW).text.split()[0])
         assert price_before == price_after
 
-
-
     def click_product_image(self):
         product_image = self.browser.find_element(*self.PRODUCT_IMAGE_PRODUCT_PAGE)
         product_image.click()
