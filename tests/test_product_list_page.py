@@ -82,7 +82,7 @@ class TestProductListPage:
         home_page.click_on_sidebar_category(1)
         product_list_page = ProductListPage(browser)
         val1 = product_list_page.get_hold_of_price(product_index)
-        product_list_page.click_image_way_to_product_page(product_index)
+        product_list_page.click_on_image_and_go_to_product_page(product_index)
         product_page = ProductPage(browser)
         val2 = product_page.get_price_on_product()
         product_list_page.check_prices_are_equal(val1, val2)

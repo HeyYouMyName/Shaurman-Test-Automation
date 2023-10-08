@@ -136,3 +136,16 @@ class BasePage:
     @staticmethod
     def check_prices_are_equal(val1, val2):
         assert val1 == val2, "they are not equal"
+
+    def _is_element_clickable(
+        self,
+        locator: str,
+        selector: str,
+        timeout: int = 4
+    ) -> bool:
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.element_to_be_clickable((locator, selector)))
+            return True
+        except:
+            return False
+
