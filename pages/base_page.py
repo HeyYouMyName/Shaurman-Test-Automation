@@ -117,9 +117,6 @@ class BasePage:
         """
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-    def scroll_to_element(self, element) -> None:
-        self.browser.execute_script("arguments[0].scrollIntoView();", element)
-
     # Specific methods
     # Checks
     def check_sidebar_present(self) -> None:

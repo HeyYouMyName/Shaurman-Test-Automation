@@ -48,7 +48,7 @@ class TestProductListPage:
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
         product_page.click_basket_button2()
-        product_page.check_number_items_in_the_basket(1)
+        product_page.check_number_of_items_in_the_basket(1)
 
     @testrail("PP_004")
     def test_add_additional_ingredient(
@@ -81,8 +81,9 @@ class TestProductListPage:
         product_page = ProductPage(browser)
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
-        product_page.add_additional_ingredient(7)
-        product_page.delete_additional_ingredient(7)
+        price_before = product_page.add_additional_ingredient(7)
+        product_page.delete_additional_ingredient(7, price_before)
+
 
     @testrail("PP_006")
     def test_zoomed_image(
