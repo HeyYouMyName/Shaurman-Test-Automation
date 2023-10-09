@@ -14,6 +14,10 @@ class BasePage:
     FOOTER_CONTAINER = (By.CSS_SELECTOR, "div.footer__container")
     MAIN_CONTENT_BLOCK = (By.CSS_SELECTOR, "#content.main")
     SIDEBAR_ITEMS = (By.CSS_SELECTOR, f"div.sidebar > ul:nth-child(2) > li")
+    LINK_ON_FOOTER_DELIVERY_AND_PAYMENT = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(2) > a")
+    LINK_ON_FOOTER_NEWS = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(3) > a")
+    LINK_ON_FOOTER_OFFERTA = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(4) > a")
+    ADDRESS_OF_SHAURMAN = (By.CSS_SELECTOR, "div.footer__address a")
 
     def __init__(
         self,
@@ -148,4 +152,24 @@ class BasePage:
             return True
         except:
             return False
+
+    def click_on_delivery_and_payment_link(self):
+        link = self.browser.find_element(*self.LINK_ON_FOOTER_DELIVERY_AND_PAYMENT)
+        link.get_attribute("href")
+        link.click()
+
+    def click_on_news_link(self):
+        link = self.browser.find_element(*self.LINK_ON_FOOTER_NEWS)
+        link.click()
+
+    def click_on_offer_link(self):
+        link = self.browser.find_element(*self.LINK_ON_FOOTER_OFFERTA)
+        link.click()
+
+    def note_the_address_and_go_to_google_maps_window(self, index):
+        note_address = self.browser.find_element(*self.ADDRESS_OF_SHAURMAN)
+        note_address_text = note_address.text
+        note_address.click()
+        self.browser.switch_to.window(self.browser.window_handles[index])
+        return note_address_text
 
