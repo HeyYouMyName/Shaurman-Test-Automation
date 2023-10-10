@@ -54,9 +54,3 @@ class TestFooter:
         note_address_text = home_page.note_the_address_and_go_to_google_maps_window(1)
         google_maps = GoogleMapsPage(browser)
         google_maps.check_address_on_maps_page_equals_to_shaurman(note_address_text)
-
-
-
-
-
-
