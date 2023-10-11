@@ -15,7 +15,7 @@ class TestFooter:
         home_page = HomePage(browser)
         home_page.open()
         home_page.scroll_to_bottom()
-        home_page.click_on_delivery_and_payment_link()
+        home_page.click_on_delivery_and_payment_link_footer()
         delivery_and_payment = DeliveryAndPaymentPage(browser)
         delivery_and_payment.check_delivery_text_in_url()
 
@@ -27,7 +27,7 @@ class TestFooter:
         home_page = HomePage(browser)
         home_page.open()
         home_page.scroll_to_bottom()
-        home_page.click_on_news_link()
+        home_page.click_on_news_link_footer()
         news_page = NewsPage(browser)
         news_page.check_blog_text_in_url()
 
@@ -39,7 +39,7 @@ class TestFooter:
         home_page = HomePage(browser)
         home_page.open()
         home_page.scroll_to_bottom()
-        home_page.click_on_offer_link()
+        home_page.click_on_offer_link_footer()
         dogovir_oferta_page = DogovirOfertaPage(browser)
         dogovir_oferta_page.check_publichnyj_dogovor_oferta_text_in_url()
 
