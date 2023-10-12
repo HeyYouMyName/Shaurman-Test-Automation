@@ -19,7 +19,6 @@ class ProductPage(BasePage):
     PRODUCT_NAME_ZOOMED = (By.CSS_SELECTOR, "div.mfp-title")
     ADDITIONAL_PRODUCT_INGRIDIENT_PRICE = (By.CSS_SELECTOR, ".single-product__attributes__right ul.product-ingridients li .product-ingridients__ingridient-proportions")
 
-
     def check_number_of_items_in_the_basket(self, arg):
         assert self._is_element_clickable(*self.NUMBER_OF_PRODUCTS_IN_BASKET)
         number = self.browser.find_element(*self.NUMBER_OF_PRODUCTS_IN_BASKET).text
@@ -69,5 +68,3 @@ class ProductPage(BasePage):
         self.click_product_image()
         product_name_zoomed = self.browser.find_element(*self.PRODUCT_NAME_ZOOMED).text
         assert product_name == product_name_zoomed
-
-

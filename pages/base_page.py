@@ -1,5 +1,3 @@
-import time
-
 from selenium.common import TimeoutException
 from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.common.by import By
@@ -257,5 +255,3 @@ class BasePage:
 
     def shopping_cart_window_is_visible(self):
         self._is_element_visible(*self.SHOPPING_CART_WINDOW)
-
-

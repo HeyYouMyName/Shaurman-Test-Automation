@@ -124,6 +124,3 @@ class TestTopBarMenu:
         home_page = HomePage(browser)
         home_page.open()
         home_page.verify_displaying_shopping_cart_icon()
-
-
-

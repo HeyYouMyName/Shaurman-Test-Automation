@@ -1,4 +1,3 @@
-
 from libraries.testrail import testrail
 from pages.home_page import HomePage
 from pages.product_list_page import ProductListPage
@@ -65,7 +64,6 @@ class TestProductListPage:
         product_page.click_on_type_of_cake(0)
         product_page.scroll_to_bottom()
         product_page.add_additional_ingredient(7)
-
 
     @testrail("PP_005")
     def test_remove_additional_ingredient(
