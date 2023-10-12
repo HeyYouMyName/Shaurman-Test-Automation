@@ -209,7 +209,7 @@ class BasePage:
         link.click()
 
     def verify_visibility_of_back_call_form(self):
-        self._is_element_visible(*self.ORDER_CALL_FORM)
+        assert self._is_element_visible(*self.ORDER_CALL_FORM)
 
     def fill_optional_form(self):
         optional_form = self.browser.find_element(*self.NAME_FIELD_OF_ORDER_CALL_FORM)
@@ -220,38 +220,38 @@ class BasePage:
         send_button.click()
 
     def verify_visibility_of_error_on_required_fields(self):
-        self._is_element_visible(*self.REQUIRED_FIELD_RED_ERROR)
+        assert self._is_element_visible(*self.REQUIRED_FIELD_RED_ERROR)
 
     def click_on_close_button_of_back_call_form(self):
         close_button = self.browser.find_element(*self.CLOSE_BUTTON_OF_ORDER_CALL_FORM)
         close_button.click()
 
     def verify_not_visibility_of_back_call_form(self):
-        self._is_not_element_visible(*self.ORDER_CALL_FORM)
+        assert self._is_not_element_visible(*self.ORDER_CALL_FORM)
 
     def hover_cursor_over_the_drop_down_list(self):
         element_to_hover = self.browser.find_element(*self.DROPDOWN_MENU)
         self.hover_cursor(element_to_hover)
 
     def verify_visibility_of_drop_down_menu_with_telephone_numbers(self):
-        self._is_element_visible(*self.PHONE_NUMBERS_IN_DROPDOWN_MENU)
+        assert self._is_element_visible(*self.PHONE_NUMBERS_IN_DROPDOWN_MENU)
 
     def click_on_shopping_cart_icon(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
         shopping_cart_icon.click()
 
     def verify_displaying_shopping_cart_icon(self):
-        self._is_element_visible(*self.SHOPPING_CART_ICON)
+        assert self._is_element_visible(*self.SHOPPING_CART_ICON)
 
     def click_on_image_and_go_to_product_page(self, arg):
-        self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
+        assert self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
 
     def click_basket_button(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON)
         basket_button.click()
 
     def shopping_cart_window_not_visible(self):
-        self._is_not_element_visible(*self.SHOPPING_CART_WINDOW)
+        assert self._is_not_element_visible(*self.SHOPPING_CART_WINDOW)
 
     def shopping_cart_window_is_visible(self):
-        self._is_element_visible(*self.SHOPPING_CART_WINDOW)
+        assert self._is_element_visible(*self.SHOPPING_CART_WINDOW)
