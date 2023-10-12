@@ -69,3 +69,5 @@ class ProductPage(BasePage):
         self.click_product_image()
         product_name_zoomed = self.browser.find_element(*self.PRODUCT_NAME_ZOOMED).text
         assert product_name == product_name_zoomed
+
+

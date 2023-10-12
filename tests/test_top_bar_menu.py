@@ -3,7 +3,6 @@ from pages.home_page import HomePage
 from pages.delivery_and_payment import DeliveryAndPaymentPage
 from pages.news_page import NewsPage
 from pages.about_us_page import AboutUs
-import time
 
 
 class TestTopBarMenu:
@@ -102,11 +101,10 @@ class TestTopBarMenu:
         home_page = HomePage(browser)
         home_page.open()
         home_page.click_on_shopping_cart_icon()
-        time.sleep(3)
-        #finish it tommorow
+        home_page.shopping_cart_window_not_visible()
 
     @testrail("TBM_010")
-    def test_drinks(
+    def test_cart_button_when_products_are_added_to_shopping_cart(
         self,
         browser
     ):
@@ -116,9 +114,7 @@ class TestTopBarMenu:
         home_page.click_on_image_and_go_to_product_page(1)
         home_page.click_basket_button()
         home_page.click_on_shopping_cart_icon()
-        time.sleep(3)
-        # finish it tommorow
-
+        home_page.shopping_cart_window_is_visible()
 
     @testrail("TBM_011")
     def test_displaying_shopping_cart_icon(

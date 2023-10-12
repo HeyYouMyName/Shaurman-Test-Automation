@@ -26,16 +26,17 @@ class BasePage:
     LINK_ON_TOP_BAR_NEWS = (By.CSS_SELECTOR, "div.top-menu__nav-block > ul > li:nth-child(4)")
     ORDER_CALL_BUTTON = (By.CSS_SELECTOR, "a.order-call-btn")
     ORDER_CALL_FORM = (By.CSS_SELECTOR, ".form.submit-call-order")
-    OPTIONAL_FIELD_OF_ORDER_CALL_FORM = (By.CSS_SELECTOR, "#call_black > div > div > div.modal-body > form > div > div > div:nth-child(1) > input")
-    REQUIRED_FIELD_OF_ORDER_CALL_FORM = (By.CSS_SELECTOR, "#call_black > div > div > div.modal-body > form > div > div > div:nth-child(2) > input")
+    NAME_FIELD_OF_ORDER_CALL_FORM = (By.CSS_SELECTOR, "#call_black > div > div > div.modal-body > form > div > div > div:nth-child(1) > input")
+    PHONE_FIELD_OF_ORDER_CALL_FORM = (By.CSS_SELECTOR, "#call_black > div > div > div.modal-body > form > div > div > div:nth-child(2) > input")
     SEND_BUTTON = (By.CSS_SELECTOR, "div.modal-body > form > div > button")
     REQUIRED_FIELD_RED_ERROR = (By.CSS_SELECTOR, "#phone-error")
     CLOSE_BUTTON_OF_ORDER_CALL_FORM = (By.CSS_SELECTOR, "#call_black > div > div > div.modal-header > button")
     DROPDOWN_MENU = (By.CSS_SELECTOR, ".dropdown")
-    NUMBERS_IN_DROPDOWN_MENU = (By.CSS_SELECTOR, ".dropdown li")
+    PHONE_NUMBERS_IN_DROPDOWN_MENU = (By.CSS_SELECTOR, ".dropdown li")
     SHOPPING_CART_ICON = (By.CSS_SELECTOR, ".top-menu__cart-info-orders-count-body")
     PRODUCT_IMG = (By.CSS_SELECTOR, ".products__item-thumb")
     TO_THE_BASKET_BUTTON = (By.CSS_SELECTOR, ".single-product__content button.single-product__order-button")
+    SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart__products")
 
     def __init__(
         self,
@@ -49,8 +50,7 @@ class BasePage:
         """
         self.browser.get(self.URL)
 
-    def hover_cursor(self, element_to_hover
-                     ):
+    def hover_cursor(self, element_to_hover):
         ActionChains(self.browser).move_to_element(element_to_hover).perform()
 
     # General methods
@@ -214,7 +214,7 @@ class BasePage:
         self._is_element_visible(*self.ORDER_CALL_FORM)
 
     def fill_optional_form(self):
-        optional_form = self.browser.find_element(*self.OPTIONAL_FIELD_OF_ORDER_CALL_FORM)
+        optional_form = self.browser.find_element(*self.NAME_FIELD_OF_ORDER_CALL_FORM)
         optional_form.send_keys("gafhjaejtaetj")
 
     def click_send_button(self):
@@ -236,7 +236,7 @@ class BasePage:
         self.hover_cursor(element_to_hover)
 
     def verify_visibility_of_drop_down_menu_with_telephone_numbers(self):
-        self._is_element_visible(*self.NUMBERS_IN_DROPDOWN_MENU)
+        self._is_element_visible(*self.PHONE_NUMBERS_IN_DROPDOWN_MENU)
 
     def click_on_shopping_cart_icon(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
@@ -251,4 +251,11 @@ class BasePage:
     def click_basket_button(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON)
         basket_button.click()
+
+    def shopping_cart_window_not_visible(self):
+        self._is_not_element_visible(*self.SHOPPING_CART_WINDOW)
+
+    def shopping_cart_window_is_visible(self):
+        self._is_element_visible(*self.SHOPPING_CART_WINDOW)
+
 
