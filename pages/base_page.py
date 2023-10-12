@@ -244,7 +244,7 @@ class BasePage:
         assert self._is_element_visible(*self.SHOPPING_CART_ICON)
 
     def click_on_image_and_go_to_product_page(self, arg):
-        assert self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
+        self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
 
     def click_basket_button(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON)
