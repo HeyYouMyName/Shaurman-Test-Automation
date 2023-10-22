@@ -35,6 +35,9 @@ class BasePage:
     PRODUCT_IMG = (By.CSS_SELECTOR, ".products__item-thumb")
     TO_THE_BASKET_BUTTON = (By.CSS_SELECTOR, ".single-product__content button.single-product__order-button")
     SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart__products")
+    UP_BUTTON = (By.CSS_SELECTOR, ".sidebar__button-up")
+    FACEBOOK_AND_INSTAGRAM_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
+    SHAURMAN_LOGO = (By.CSS_SELECTOR, ".sidebar-nav__brand")
 
     def __init__(
         self,
@@ -269,3 +272,31 @@ class BasePage:
 
     def shopping_cart_window_is_visible(self):
         assert self._is_element_visible(*self.SHOPPING_CART_WINDOW)
+
+    def verify_presence_of_up_button(self):
+        assert self._is_element_visible(*self.UP_BUTTON)
+
+    def verify_the_work_of_up_button(self):
+        button = self.browser.find_element(*self.UP_BUTTON)
+        button.click()
+
+    def click_on_facebook_button(self):
+        buttons = self.browser.find_elements(*self.FACEBOOK_AND_INSTAGRAM_BUTTONS)
+        buttons[1].click()
+        self.browser.switch_to.window(self.browser.window_handles[1])
+
+    def click_on_instagram_button(self):
+        buttons = self.browser.find_elements(*self.FACEBOOK_AND_INSTAGRAM_BUTTONS)
+        buttons[0].click()
+        self.browser.switch_to.window(self.browser.window_handles[1])
+
+    def verify_presence_of_logo(self):
+        assert self._is_element_visible(*self.SHAURMAN_LOGO)
+
+    def click_on_first_product_on_product_page(self):
+        list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
+        list_of_products_imgs[0].click()
+
+    def click_on_the_logo(self):
+        logo = self.browser.find_element(*self.SHAURMAN_LOGO)
+        logo.click()
