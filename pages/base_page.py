@@ -36,7 +36,7 @@ class BasePage:
     TO_THE_BASKET_BUTTON = (By.CSS_SELECTOR, ".single-product__content button.single-product__order-button")
     SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart__products")
     UP_BUTTON = (By.CSS_SELECTOR, ".sidebar__button-up")
-    FACEBOOK_AND_INSTAGRAM_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
+    SOCIAL_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
     SHAURMAN_LOGO = (By.CSS_SELECTOR, ".sidebar-nav__brand")
 
     def __init__(
@@ -281,12 +281,12 @@ class BasePage:
         button.click()
 
     def click_on_facebook_button(self):
-        buttons = self.browser.find_elements(*self.FACEBOOK_AND_INSTAGRAM_BUTTONS)
+        buttons = self.browser.find_elements(*self.SOCIAL_BUTTONS)
         buttons[1].click()
         self.browser.switch_to.window(self.browser.window_handles[1])
 
     def click_on_instagram_button(self):
-        buttons = self.browser.find_elements(*self.FACEBOOK_AND_INSTAGRAM_BUTTONS)
+        buttons = self.browser.find_elements(*self.SOCIAL_BUTTONS)
         buttons[0].click()
         self.browser.switch_to.window(self.browser.window_handles[1])
 
