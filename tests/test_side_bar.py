@@ -29,8 +29,7 @@ class TestSideBar:
         home_page.open()
         home_page.scroll_to_bottom()
         home_page.click_up_button()
-        top_position = home_page.get_hold_of_top_top_position()
-        home_page.verify_position_on_the_top_of_the_page(top_position)
+        home_page.verify_position_on_the_top_of_the_page(home_page.get_hold_of_top_top_position())
 
     @testrail("SB_003")
     @pytest.mark.parametrize("sidebar_category", range(NUMBER_OF_SIDEBAR_CATEGORIES))
@@ -81,7 +80,7 @@ class TestSideBar:
 
     @testrail("SB_008")
     @pytest.mark.parametrize("sidebar_category, product", [(s, p) for s in range(3) for p in range(2)])
-    def test_not_ready_yet(
+    def verify_the_link_on_shaurman_logo(
         self,
         browser,
         sidebar_category,
@@ -92,11 +91,10 @@ class TestSideBar:
         home_page.click_on_sidebar_category(sidebar_category)
         product_list_page = ProductListPage(browser)
         product_list_page.click_on_the_logo()
-        home_page.check_that_you_are_back_on_home_page()
+        home_page.check_presence_on_the_home_page()
         home_page.click_on_sidebar_category(sidebar_category)
         product_list_page = ProductListPage(browser)
         product_list_page.click_on_product_on_product_page(product)
         product_page = ProductPage(browser)
         product_page.click_on_the_logo()
-        home_page.check_that_you_are_back_on_home_page()
-
+        home_page.check_presence_on_the_home_page()
