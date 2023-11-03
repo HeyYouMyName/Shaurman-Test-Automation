@@ -29,7 +29,7 @@ class TestSideBar:
         home_page.open()
         home_page.scroll_to_bottom()
         home_page.click_up_button()
-        home_page.verify_position_on_the_top_of_the_page(home_page.get_hold_of_top_top_position())
+        home_page.verify_page_scrolled_to_top()
 
     @testrail("SB_003")
     @pytest.mark.parametrize("sidebar_category", range(NUMBER_OF_SIDEBAR_CATEGORIES))

@@ -321,9 +321,9 @@ class BasePage:
         scroll_position = self.browser.execute_script("return window.scrollY;")
         return scroll_position
 
-    @staticmethod
-    def verify_position_on_the_top_of_the_page(func):
-        assert func == 0
+    def verify_page_scrolled_to_top(self):
+        print(self.get_hold_of_top_top_position())
+        assert self.get_hold_of_top_top_position() == 0
 
     def click_on_product_on_product_page(self, index):
         list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
