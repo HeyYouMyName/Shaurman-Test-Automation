@@ -11,7 +11,7 @@ class ProductListPage(BasePage):
     PRODUCT_WEIGHT = (By.CSS_SELECTOR, ".products__item-head .products__item-weight")
     PRODUCT_PRICE = (By.CSS_SELECTOR, ".products__item-head .products__item-price")
     PRODUCT_INGREDIENTS = (By.CSS_SELECTOR, ".products__item-head .products__item-description")
-
+    ALL_PRODUCTS_TITLE = (By.CSS_SELECTOR, ".header-block__title")
 
     def check_change_button_present(self) -> None:
         assert self._is_elements_visible(*self.CHANGE_BUTTON)
@@ -37,5 +37,8 @@ class ProductListPage(BasePage):
         price = self.browser.find_elements(*self.PRODUCT_PRICE)[arg].text
         return price
 
+    def get_hold_of_all_products_name(self):
+        products_title = self.browser.find_element(*self.ALL_PRODUCTS_TITLE)
+        return products_title
 
 

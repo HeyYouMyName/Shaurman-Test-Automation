@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
+import time
 
 
 class BasePage:
@@ -15,6 +16,7 @@ class BasePage:
     FOOTER_CONTAINER = (By.CSS_SELECTOR, "div.footer__container")
     MAIN_CONTENT_BLOCK = (By.CSS_SELECTOR, "#content.main")
     SIDEBAR_ITEMS = (By.CSS_SELECTOR, "div.sidebar > ul:nth-child(2) > li")
+    SIDEBAR_ITEMS_TEXT = (By.CSS_SELECTOR, "div.sidebar > ul:nth-child(2)  > li > a >  span")
     LINK_ON_FOOTER_DELIVERY_AND_PAYMENT = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(2) > a")
     LINK_ON_FOOTER_NEWS = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(3) > a")
     LINK_ON_FOOTER_OFFERTA = (By.CSS_SELECTOR, "div.footer__nav > ul > li:nth-child(4) > a")
@@ -35,12 +37,28 @@ class BasePage:
     PRODUCT_IMG = (By.CSS_SELECTOR, ".products__item-thumb")
     TO_THE_BASKET_BUTTON = (By.CSS_SELECTOR, ".single-product__content button.single-product__order-button")
     SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart__products")
+    UP_BUTTON = (By.CSS_SELECTOR, ".sidebar__button-up")
+    SOCIAL_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
+    SHAURMAN_LOGO = (By.CSS_SELECTOR, ".sidebar-nav__brand")
 
     def __init__(
         self,
         browser: webdriver
     ):
         self.browser = browser
+
+    @staticmethod
+    def retry_until_result(desired_result, max_retries, interval_seconds):
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                for _ in range(max_retries):
+                    result = func(*args, **kwargs)
+                    if result == desired_result:
+                        return result
+                    time.sleep(interval_seconds)
+                raise Exception("Desired result not achieved after {} retries".format(max_retries))
+            return wrapper
+        return decorator
 
     def open(self) -> None:
         """
@@ -114,7 +132,7 @@ class BasePage:
         self,
         locator: str,
         selector: str,
-        timeout: int = 4
+        timeout: int = 1
     ) -> bool:
         try:
             WebDriverWait(self.browser, timeout).until(
@@ -167,9 +185,17 @@ class BasePage:
     def check_main_content_block_present(self) -> None:
         assert self._is_element_visible(*self.MAIN_CONTENT_BLOCK)
 
-    def click_on_sidebar_category(self, arg):
+    def click_on_sidebar_category(self, index):
         side_bar_menu = self.browser.find_elements(*self.SIDEBAR_ITEMS)
-        side_bar_menu[arg].click()
+        side_bar_menu[index].click()
+
+    def get_text_of_sidebar_category(self, index):
+        side_bar_menu_text = self.browser.find_elements(*self.SIDEBAR_ITEMS_TEXT)
+        return side_bar_menu_text[index].text
+
+    @staticmethod
+    def check_that_you_are_on_right_product_list_page(name1, name2):
+        assert name1 == name2
 
     @staticmethod
     def check_prices_are_equal(val1, val2):
@@ -269,3 +295,40 @@ class BasePage:
 
     def shopping_cart_window_is_visible(self):
         assert self._is_element_visible(*self.SHOPPING_CART_WINDOW)
+
+    def verify_presence_of_up_button(self):
+        assert self._is_element_visible(*self.UP_BUTTON)
+
+    def click_up_button(self):
+        button = self.browser.find_element(*self.UP_BUTTON)
+        button.click()
+
+    def click_on_facebook_button(self):
+        buttons = self.browser.find_elements(*self.SOCIAL_BUTTONS)
+        buttons[1].click()
+        self.browser.switch_to.window(self.browser.window_handles[1])
+
+    def click_on_instagram_button(self):
+        buttons = self.browser.find_elements(*self.SOCIAL_BUTTONS)
+        buttons[0].click()
+        self.browser.switch_to.window(self.browser.window_handles[1])
+
+    def verify_presence_of_logo(self):
+        assert self._is_element_visible(*self.SHAURMAN_LOGO)
+
+    @retry_until_result(desired_result=0, max_retries=5, interval_seconds=1)
+    def get_hold_of_top_top_position(self):
+        scroll_position = self.browser.execute_script("return window.scrollY;")
+        return scroll_position
+
+    def verify_page_scrolled_to_top(self):
+        print(self.get_hold_of_top_top_position())
+        assert self.get_hold_of_top_top_position() == 0
+
+    def click_on_product_on_product_page(self, index):
+        list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
+        list_of_products_imgs[index].click()
+
+    def click_on_the_logo(self):
+        logo = self.browser.find_element(*self.SHAURMAN_LOGO)
+        logo.click()
