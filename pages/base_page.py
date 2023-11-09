@@ -40,6 +40,12 @@ class BasePage:
     UP_BUTTON = (By.CSS_SELECTOR, ".sidebar__button-up")
     SOCIAL_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
     SHAURMAN_LOGO = (By.CSS_SELECTOR, ".sidebar-nav__brand")
+    PRODUCTS_IN_SHOPPING_CART = (By.CSS_SELECTOR, ".cart__products")
+    TYPE_OF_MAIN_INGREDIENTS = (By.CSS_SELECTOR, "div.product-sauces__sauce-image")
+    PRODUCT_NAME_IN_SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart-carousel__slide-title")
+    LIST_OF_INGREDIENTS = (By.CSS_SELECTOR, ".popover-content .cart-carousel__attributes-popover")
+    DELETE_BUTTON = (By.CSS_SELECTOR, ".fa.fa-times")
+    LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART = (By.CSS_SELECTOR, ".cart-carousel__slide-title")
 
     def __init__(
         self,
@@ -80,6 +86,21 @@ class BasePage:
         Check if specified element is present on the page
         """
         return not self._is_not_element_present(locator, selector, timeout)
+
+    def _is_text_present(
+        self,
+        locator: str,
+        selector: str,
+        text: str,
+        timeout: int = 4
+    ) -> bool:
+        try:
+            WebDriverWait(self.browser, timeout).until(
+                EC.text_to_be_present_in_element((locator, selector), text)
+            )
+        except TimeoutException:
+            return False
+        return True
 
     def _is_not_element_present(
         self,
@@ -171,8 +192,6 @@ class BasePage:
         """
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-    # Specific methods
-    # Checks
     def check_sidebar_present(self) -> None:
         assert self._is_element_visible(*self.SIDEBAR_BLOCK)
 
@@ -276,9 +295,19 @@ class BasePage:
     def verify_visibility_of_drop_down_menu_with_telephone_numbers(self):
         assert self._is_element_visible(*self.PHONE_NUMBERS_IN_DROPDOWN_MENU)
 
+    def verify_visibility_of_products_in_shopping_cart(self):
+        assert self._is_element_visible(*self.PRODUCTS_IN_SHOPPING_CART)
+
     def click_on_shopping_cart_icon(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
         shopping_cart_icon.click()
+
+    def wait_till_text_present_in_shopping_cart_icon(self, arg):
+        assert self._is_text_present(*self.SHOPPING_CART_ICON, arg)
+
+    def verify_presence_of_text_and_number_of_items_in_shopping_cart_icon(self, arg):
+        shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
+        assert "Страв у кошику" and f"{arg}" in shopping_cart_icon.text
 
     def verify_displaying_shopping_cart_icon(self):
         assert self._is_element_visible(*self.SHOPPING_CART_ICON)
@@ -286,11 +315,11 @@ class BasePage:
     def click_on_image_and_go_to_product_page(self, arg):
         self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
 
-    def click_basket_button(self):
+    def click_on_basket_button(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON)
         basket_button.click()
 
-    def shopping_cart_window_not_visible(self):
+    def shopping_cart_window_is_not_visible(self):
         assert self._is_not_element_visible(*self.SHOPPING_CART_WINDOW)
 
     def shopping_cart_window_is_visible(self):
@@ -332,3 +361,29 @@ class BasePage:
     def click_on_the_logo(self):
         logo = self.browser.find_element(*self.SHAURMAN_LOGO)
         logo.click()
+
+    def choose_main_ingredient(self, index):
+        types_of_cake = self.browser.find_elements(*self.TYPE_OF_MAIN_INGREDIENTS)
+        assert self._is_element_clickable(*self.TYPE_OF_MAIN_INGREDIENTS)
+        types_of_cake[index].click()
+
+    def verify_visibility_of_list_of_ingredients(self):
+        assert self._is_element_visible(*self.PRODUCTS_IN_SHOPPING_CART)
+
+    def click_on_product_name_on_product_page(self):
+        product_name = self.browser.find_element(*self.PRODUCT_NAME_IN_SHOPPING_CART_WINDOW)
+        product_name.click()
+
+    def click_on_delete_button_in_shopping_cart_menu(self, index):
+        delete_button = self.browser.find_elements(*self.DELETE_BUTTON)
+        delete_button[index].click()
+
+    def wait_for_delete_button_to_appear_in_shopping_cart_menu(self):
+        assert self._is_elements_visible(*self.DELETE_BUTTON)
+
+    def product_to_be_deleted_from_shopping_cart_menu(self, index):
+        element = self.browser.find_elements(*self.LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART)[index]
+        return element.text
+
+    def check_that_product_deleted_from_shopping_cart_menu(self, arg):
+        assert arg not in self.browser.find_elements(*self.LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART)

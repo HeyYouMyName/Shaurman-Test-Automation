@@ -7,7 +7,7 @@ class ProductPage(BasePage):
     # Locators
     PRICE_ON_PRODUCT_PAGE = (By.CSS_SELECTOR, "div.single-product__content > div.single-product__order > p > span")
     CAKE_TEXT_WARNING_MESSAGE = (By.CSS_SELECTOR, "div.text-danger")
-    TYPE_OF_CAKES = (By.CSS_SELECTOR, "div.product-sauces__sauce-image")
+    TYPE_OF_MAIN_INGREDIENTS = (By.CSS_SELECTOR, "div.product-sauces__sauce-image")
     TO_THE_BASKET_BUTTON2 = (By.CSS_SELECTOR, ".single-product__lets-try .single-product__order-button")
     NUMBER_OF_PRODUCTS_IN_BASKET = (By.CSS_SELECTOR, ".top-menu__cart-info-orders-count-value")
     LIST_OF_ADDITIONAL_PRODUCT_INGRIDIENTS = (By.CSS_SELECTOR, ".single-product__attributes__right .product-ingridients li")
@@ -31,11 +31,6 @@ class ProductPage(BasePage):
     def click_basket_button2(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON2)
         basket_button.click()
-
-    def click_on_type_of_cake(self, index):
-        types_of_cake = self.browser.find_elements(*self.TYPE_OF_CAKES)
-        assert self._is_element_clickable(*self.TYPE_OF_CAKES)
-        types_of_cake[index].click()
 
     def check_cake_nessesary_text_is_displayed(self) -> None:
         assert self._is_element_visible(*self.CAKE_TEXT_WARNING_MESSAGE)
