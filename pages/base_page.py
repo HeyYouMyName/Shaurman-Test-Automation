@@ -322,7 +322,7 @@ class BasePage:
 
     def verify_presence_of_number_of_items_in_shopping_cart_icon(self, number_of_items):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
-        assert f"{number_of_items}" in shopping_cart_icon.text
+        assert str(number_of_items) in shopping_cart_icon.text
 
     def verify_presence_of_text_in_shopping_cart_icon(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
@@ -365,13 +365,13 @@ class BasePage:
         assert self._is_element_visible(*self.SHAURMAN_LOGO)
 
     @retry_until_result(desired_result=0, max_retries=5, interval_seconds=1)
-    def get_hold_of_top_top_position(self):
+    def get__top_position(self):
         scroll_position = self.browser.execute_script("return window.scrollY;")
         return scroll_position
 
     def verify_page_scrolled_to_top(self):
-        print(self.get_hold_of_top_top_position())
-        assert self.get_hold_of_top_top_position() == 0
+        print(self.get__top_position())
+        assert self.get__top_position() == 0
 
     def click_on_product_on_product_list_page(self, index):
         list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
@@ -418,7 +418,7 @@ class BasePage:
         pay_by_card_button = self.browser.find_element(*self.PAY_BY_CARD_BUTTON)
         pay_by_card_button.click()
 
-    def fast_order_form_is_visible(self):
+    def verify_fast_order_form_is_visible(self):
         assert self._is_element_visible(*self.FAST_ORDER_FORM)
 
     def click_on_plus_button_in_cart(self):
@@ -434,12 +434,12 @@ class BasePage:
         price_cart = self.browser.find_element(*self.PRICE_IN_THE_SHOPPING_CART).text
         assert price_cart == price_product
 
-    def get_hold_of_the_price_in_the_cart(self):
+    def get_the_price_in_the_cart(self):
         assert self._is_text_present(*self.PRICE_IN_THE_SHOPPING_CART, "грн")
         price_cart = self.browser.find_element(*self.PRICE_IN_THE_SHOPPING_CART).text
         return price_cart
 
-    def get_hold_of_the_price_on_the_product_list_page(self, position_in_a_list):
+    def get_the_price_on_the_product_list_page(self, position_in_a_list):
         price_product = int(self.browser.find_elements(*self.PRODUCT_PRICE_ON_PRODUCT_LIST_PAGE)[position_in_a_list].text.split()[0])
         return price_product
 
@@ -466,11 +466,11 @@ class BasePage:
     def check_that_img_of_a_product_is_visible_in_the_cart(self):
         assert self._is_element_visible(*self.PRODUCT_IMG_IN_SHOPPING_CART)
 
-    def get_hold_of_order_quantity(self):
+    def get_order_quantity(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON).text
         return shopping_cart_icon.split()[3]
 
-    def get_hold_of_order_quantity_in_the_shopping_cart(self):
+    def get_order_quantity_in_the_shopping_cart(self):
         order_quantity = self.browser.find_element(*self.PRODUCT_QUANTITY_IN_SHOPPING_CART).get_attribute("value")
         return order_quantity
 

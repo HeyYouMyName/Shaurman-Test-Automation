@@ -33,11 +33,11 @@ class ProductListPage(BasePage):
         side_bar_menu = self.browser.find_elements(*self.ORDER_BUTTON)
         side_bar_menu[arg].click()
 
-    def get_hold_of_price(self, arg):
+    def get_price(self, arg):
         price = self.browser.find_elements(*self.PRODUCT_PRICE)[arg].text
         return price
 
-    def get_hold_of_all_products_name(self):
+    def get_all_products_name(self):
         products_title = self.browser.find_element(*self.ALL_PRODUCTS_TITLE)
         return products_title
 

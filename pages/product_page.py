@@ -19,7 +19,7 @@ class ProductPage(BasePage):
     PRODUCT_NAME_ZOOMED = (By.CSS_SELECTOR, "div.mfp-title")
     ADDITIONAL_PRODUCT_INGRIDIENT_PRICE = (By.CSS_SELECTOR, ".single-product__attributes__right ul.product-ingridients li .product-ingridients__ingridient-proportions")
 
-    def get_hold_of_price_on_product_page(self):
+    def get_price_on_product_page(self):
         price_on_product_page = self.browser.find_element(*self.PRICE_LOW).text
         return price_on_product_page
 
