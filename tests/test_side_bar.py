@@ -94,7 +94,7 @@ class TestSideBar:
         home_page.check_presence_on_the_home_page()
         home_page.click_on_sidebar_category(sidebar_category)
         product_list_page = ProductListPage(browser)
-        product_list_page.click_on_product_on_product_page(product)
+        product_list_page.click_on_product_on_product_list_page(product)
         product_page = ProductPage(browser)
         product_page.click_on_the_logo()
         home_page.check_presence_on_the_home_page()
