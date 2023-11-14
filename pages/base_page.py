@@ -365,13 +365,12 @@ class BasePage:
         assert self._is_element_visible(*self.SHAURMAN_LOGO)
 
     @retry_until_result(desired_result=0, max_retries=5, interval_seconds=1)
-    def get__top_position(self):
+    def get_top_position(self):
         scroll_position = self.browser.execute_script("return window.scrollY;")
         return scroll_position
 
     def verify_page_scrolled_to_top(self):
-        print(self.get__top_position())
-        assert self.get__top_position() == 0
+        assert self.get_top_position() == 0
 
     def click_on_product_on_product_list_page(self, index):
         list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
