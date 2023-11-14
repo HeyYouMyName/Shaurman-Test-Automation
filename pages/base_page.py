@@ -40,6 +40,27 @@ class BasePage:
     UP_BUTTON = (By.CSS_SELECTOR, ".sidebar__button-up")
     SOCIAL_BUTTONS = (By.CSS_SELECTOR, ".sidebar__socials li")
     SHAURMAN_LOGO = (By.CSS_SELECTOR, ".sidebar-nav__brand")
+    PRODUCTS_IN_SHOPPING_CART = (By.CSS_SELECTOR, ".cart__products")
+    TYPE_OF_MAIN_INGREDIENTS = (By.CSS_SELECTOR, "div.product-sauces__sauce-image")
+    PRODUCT_NAME_IN_SHOPPING_CART_WINDOW = (By.CSS_SELECTOR, ".cart-carousel__slide-title")
+    LIST_OF_INGREDIENTS = (By.CSS_SELECTOR, ".popover-content .cart-carousel__attributes-popover")
+    DELETE_BUTTON_TO_REMOVE_ELEMENT_FROM_CART = (By.CSS_SELECTOR, ".fa.fa-times")
+    LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART = (By.CSS_SELECTOR, ".cart-carousel__slide-title")
+    CART_CAROUSEL = (By.CSS_SELECTOR, "#cart-carousel")
+    PAY_BY_CARD_BUTTON = (By.CSS_SELECTOR, "#cart > div.cart__info > div > div:nth-child(4) > a")
+    PAY_TO_COURIER_BUTTON = (By.CSS_SELECTOR, "#cart > div.cart__info > div > div:nth-child(3) > a")
+    FAST_ORDER_FORM = (By.CSS_SELECTOR, ".form.submit-fast-order")
+    PLUS_BUTTON_IN_CART = (By.CSS_SELECTOR, "div.product-quantity > a:nth-child(3)")
+    MINUS_BUTTON_IN_CART = (By.CSS_SELECTOR, "div.product-quantity > a:nth-child(1)")
+    PRICE_ON_PRODUCT_PAGE = (By.CSS_SELECTOR, "div.single-product__content > div.single-product__order > p > span")
+    PRICE_IN_THE_SHOPPING_CART = (By.CSS_SELECTOR, ".cart__info-price")
+    PRODUCT_NAME_ON_PRODUCT_PAGE = (By.CSS_SELECTOR, "p.single-product__title")
+    PRODUCT_NAME_IN_THE_SHOPPING_CART = (By.CSS_SELECTOR, ".cart-carousel__slide-title")
+    LIST_OF_PRODUCT_IMGS = (By.CSS_SELECTOR, ".content [alt][title]")
+    PRODUCT_IMG_IN_SHOPPING_CART = (By.CSS_SELECTOR, "#cart-carousel > div.owl-stage-outer > div > div > div > a > img")
+    YOU_ORDER_MESSAGE = (By.CSS_SELECTOR, ".cart__info-title")
+    PRODUCT_QUANTITY_IN_SHOPPING_CART = (By.CSS_SELECTOR, ".product-quantity__input")
+    PRODUCT_PRICE_ON_PRODUCT_LIST_PAGE = (By.CSS_SELECTOR, ".products__item-head .products__item-price")
 
     def __init__(
         self,
@@ -80,6 +101,21 @@ class BasePage:
         Check if specified element is present on the page
         """
         return not self._is_not_element_present(locator, selector, timeout)
+
+    def _is_text_present(
+        self,
+        locator: str,
+        selector: str,
+        text: str,
+        timeout: int = 4
+    ) -> bool:
+        try:
+            WebDriverWait(self.browser, timeout).until(
+                EC.text_to_be_present_in_element((locator, selector), text)
+            )
+        except TimeoutException:
+            return False
+        return True
 
     def _is_not_element_present(
         self,
@@ -171,8 +207,6 @@ class BasePage:
         """
         self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-    # Specific methods
-    # Checks
     def check_sidebar_present(self) -> None:
         assert self._is_element_visible(*self.SIDEBAR_BLOCK)
 
@@ -276,9 +310,23 @@ class BasePage:
     def verify_visibility_of_drop_down_menu_with_telephone_numbers(self):
         assert self._is_element_visible(*self.PHONE_NUMBERS_IN_DROPDOWN_MENU)
 
+    def verify_visibility_of_products_in_shopping_cart(self):
+        assert self._is_element_visible(*self.PRODUCTS_IN_SHOPPING_CART)
+
     def click_on_shopping_cart_icon(self):
         shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
         shopping_cart_icon.click()
+
+    def wait_till_text_present_in_shopping_cart_icon(self, number_of_items_in_string_format):
+        assert self._is_text_present(*self.SHOPPING_CART_ICON, number_of_items_in_string_format)
+
+    def verify_presence_of_number_of_items_in_shopping_cart_icon(self, number_of_items):
+        shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
+        assert str(number_of_items) in shopping_cart_icon.text
+
+    def verify_presence_of_text_in_shopping_cart_icon(self):
+        shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON)
+        assert "Страв у кошику" in shopping_cart_icon.text
 
     def verify_displaying_shopping_cart_icon(self):
         assert self._is_element_visible(*self.SHOPPING_CART_ICON)
@@ -286,11 +334,11 @@ class BasePage:
     def click_on_image_and_go_to_product_page(self, arg):
         self.browser.find_elements(*self.PRODUCT_IMG)[arg].click()
 
-    def click_basket_button(self):
+    def click_on_basket_button(self):
         basket_button = self.browser.find_element(*self.TO_THE_BASKET_BUTTON)
         basket_button.click()
 
-    def shopping_cart_window_not_visible(self):
+    def shopping_cart_window_is_not_visible(self):
         assert self._is_not_element_visible(*self.SHOPPING_CART_WINDOW)
 
     def shopping_cart_window_is_visible(self):
@@ -317,18 +365,117 @@ class BasePage:
         assert self._is_element_visible(*self.SHAURMAN_LOGO)
 
     @retry_until_result(desired_result=0, max_retries=5, interval_seconds=1)
-    def get_hold_of_top_top_position(self):
+    def get_top_position(self):
         scroll_position = self.browser.execute_script("return window.scrollY;")
         return scroll_position
 
     def verify_page_scrolled_to_top(self):
-        print(self.get_hold_of_top_top_position())
-        assert self.get_hold_of_top_top_position() == 0
+        assert self.get_top_position() == 0
 
-    def click_on_product_on_product_page(self, index):
+    def click_on_product_on_product_list_page(self, index):
         list_of_products_imgs = self.browser.find_elements(*self.PRODUCT_IMG)
         list_of_products_imgs[index].click()
 
     def click_on_the_logo(self):
         logo = self.browser.find_element(*self.SHAURMAN_LOGO)
         logo.click()
+
+    def choose_main_ingredient(self, index):
+        types_of_cake = self.browser.find_elements(*self.TYPE_OF_MAIN_INGREDIENTS)
+        assert self._is_element_clickable(*self.TYPE_OF_MAIN_INGREDIENTS)
+        types_of_cake[index].click()
+
+    def verify_visibility_of_list_of_ingredients(self):
+        assert self._is_element_visible(*self.PRODUCTS_IN_SHOPPING_CART)
+
+    def click_on_product_name_on_product_page(self):
+        product_name = self.browser.find_element(*self.PRODUCT_NAME_IN_SHOPPING_CART_WINDOW)
+        product_name.click()
+
+    def click_on_delete_button_in_shopping_cart_menu(self, index):
+        delete_button = self.browser.find_elements(*self.DELETE_BUTTON_TO_REMOVE_ELEMENT_FROM_CART)
+        delete_button[index].click()
+
+    def wait_for_delete_button_to_appear_in_shopping_cart_menu(self):
+        assert self._is_elements_visible(*self.DELETE_BUTTON_TO_REMOVE_ELEMENT_FROM_CART)
+
+    def product_to_be_deleted_from_shopping_cart_menu(self, index):
+        element = self.browser.find_elements(*self.LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART)[index]
+        return element.text
+
+    def check_that_product_deleted_from_shopping_cart_menu(self, arg):
+        assert arg not in self.browser.find_elements(*self.LIST_OF_PRODUCTS_IN_THE_SHOPPING_CART)
+
+    def check_that_cart_carousel_is_visible(self):
+        assert self._is_element_visible(*self.CART_CAROUSEL)
+
+    def click_on_pay_by_card_button(self):
+        pay_by_card_button = self.browser.find_element(*self.PAY_BY_CARD_BUTTON)
+        pay_by_card_button.click()
+
+    def click_on_pay_to_courier_button(self):
+        pay_by_card_button = self.browser.find_element(*self.PAY_BY_CARD_BUTTON)
+        pay_by_card_button.click()
+
+    def verify_fast_order_form_is_visible(self):
+        assert self._is_element_visible(*self.FAST_ORDER_FORM)
+
+    def click_on_plus_button_in_cart(self):
+        plus_button = self.browser.find_element(*self.PLUS_BUTTON_IN_CART)
+        plus_button.click()
+
+    def click_on_minus_button_in_cart(self):
+        minus_button = self.browser.find_element(*self.MINUS_BUTTON_IN_CART)
+        minus_button.click()
+
+    def check_that_price_on_product_page_equals_to_the_price_in_the_cart(self):
+        price_product = self.browser.find_element(*self.PRICE_ON_PRODUCT_PAGE).text
+        price_cart = self.browser.find_element(*self.PRICE_IN_THE_SHOPPING_CART).text
+        assert price_cart == price_product
+
+    def get_the_price_in_the_cart(self):
+        assert self._is_text_present(*self.PRICE_IN_THE_SHOPPING_CART, "грн")
+        price_cart = self.browser.find_element(*self.PRICE_IN_THE_SHOPPING_CART).text
+        return price_cart
+
+    def get_the_price_on_the_product_list_page(self, position_in_a_list):
+        price_product = int(self.browser.find_elements(*self.PRODUCT_PRICE_ON_PRODUCT_LIST_PAGE)[position_in_a_list].text.split()[0])
+        return price_product
+
+    def check_that_double_price_on_product_page_equals_to_the_increased_price_in_the_cart(self, price_product, number_of_same_products_in_cart):
+        price_cart = int(self.browser.find_element(*self.PRICE_IN_THE_SHOPPING_CART).text.split()[0])
+        assert price_cart == (number_of_same_products_in_cart * price_product)
+
+    def check_that_name_on_product_page_equals_to_the_name_in_the_cart(self):
+        product_name_on_product_page = self.browser.find_element(*self.PRODUCT_NAME_ON_PRODUCT_PAGE).text
+        product_name_in_shopping_cart = self.browser.find_element(*self.PRODUCT_NAME_IN_THE_SHOPPING_CART).text
+        assert product_name_in_shopping_cart.lower() == product_name_on_product_page.lower()
+
+    def check_that_img_on_product_page_equals_to_the_img_in_the_cart(self):
+        product_img_1 = self.browser.find_elements(*self.LIST_OF_PRODUCT_IMGS)[0].get_attribute("title")
+        product_img_2 = self.browser.find_elements(*self.LIST_OF_PRODUCT_IMGS)[1].get_attribute("title")
+        assert product_img_1 == product_img_2
+
+    def check_that_price_of_a_product_is_visible_in_the_cart(self):
+        assert self._is_element_visible(*self.PRICE_IN_THE_SHOPPING_CART)
+
+    def check_that_name_of_a_product_is_visible_in_the_cart(self):
+        assert self._is_element_visible(*self.PRODUCT_NAME_IN_THE_SHOPPING_CART)
+
+    def check_that_img_of_a_product_is_visible_in_the_cart(self):
+        assert self._is_element_visible(*self.PRODUCT_IMG_IN_SHOPPING_CART)
+
+    def get_order_quantity(self):
+        shopping_cart_icon = self.browser.find_element(*self.SHOPPING_CART_ICON).text
+        return shopping_cart_icon.split()[3]
+
+    def get_order_quantity_in_the_shopping_cart(self):
+        order_quantity = self.browser.find_element(*self.PRODUCT_QUANTITY_IN_SHOPPING_CART).get_attribute("value")
+        return order_quantity
+
+    def check_that_order_quantity_is_correct(self, order_quantity):
+        if order_quantity == '1':
+            assert f"Ви замовили {order_quantity} страву на суму" in self.browser.find_element(*self.YOU_ORDER_MESSAGE).text
+        else:
+            assert self._is_text_present(*self.YOU_ORDER_MESSAGE, order_quantity)
+            assert f"Ви замовили {order_quantity} страви на суму" in self.browser.find_element(*self.YOU_ORDER_MESSAGE).text

@@ -101,7 +101,7 @@ class TestTopBarMenu:
         home_page = HomePage(browser)
         home_page.open()
         home_page.click_on_shopping_cart_icon()
-        home_page.shopping_cart_window_not_visible()
+        home_page.shopping_cart_window_is_not_visible()
 
     @testrail("TBM_010")
     def test_cart_button_when_products_are_added_to_shopping_cart(
@@ -112,7 +112,7 @@ class TestTopBarMenu:
         home_page.open()
         home_page.click_on_sidebar_category(16)
         home_page.click_on_image_and_go_to_product_page(1)
-        home_page.click_basket_button()
+        home_page.click_on_basket_button()
         home_page.click_on_shopping_cart_icon()
         home_page.shopping_cart_window_is_visible()
 
